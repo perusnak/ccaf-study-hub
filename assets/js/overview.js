@@ -19,11 +19,29 @@
     ]);
   }
 
+  function scenarioCount(name) {
+    var n = 0;
+    for (var i = 0; i < Q.length; i++) { if (Q[i].scenario === name) n++; }
+    return n;
+  }
+
   function scenarioCard(s, i) {
-    return el('div', { class: 'card scenario-card', style: 'border-left-color:' + ACCENTS[i % 3] }, [
-      el('h4', { text: 'Scenario ' + s.n + ': ' + s.name }),
-      el('p', { html: s.desc || '' }),
+    var count = scenarioCount(s.name);
+    var badge = count
+      ? el('span', { class: 'pill d' + ((i % 3) + 1), text: count + ' practice Q' })
+      : el('span', { class: 'pill', style: 'opacity:.7', text: 'no practice Q yet' });
+    var head = el('div', { style: 'display:flex;align-items:baseline;gap:.5rem;flex-wrap:wrap;justify-content:space-between' }, [
+      el('h4', { style: 'margin:0', text: 'Scenario ' + s.n + ': ' + s.name }),
+      badge,
     ]);
+    var children = [head, el('p', { html: s.desc || '' })];
+    if (!count) {
+      children.push(el('p', { class: 'muted', style: 'font-size:.82rem;margin-top:.3rem' }, [
+        el('span', { text: 'Not yet covered by the community question bank. ' }),
+        el('a', { href: '#/resources', text: 'Find more practice in Resources →' }),
+      ]));
+    }
+    return el('div', { class: 'card scenario-card', style: 'border-left-color:' + ACCENTS[i % 3] }, children);
   }
 
   window.Overview = {
@@ -36,32 +54,33 @@
       });
 
       var hero = el('div', { class: 'hero' }, [
-        el('div', {}, [
-          el('div', { class: 'eyebrow', text: 'Exam preparation hub' }),
-          el('h1', { text: META.title }),
-          el('p', { class: 'lead', text:
-            'Everything you need in one place: the full theory, ' + Q.length +
-            ' exam-style practice questions, a timed exam simulation, and flashcards.' }),
-          el('div', { style: 'display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1rem' }, [
-            el('a', { class: 'btn accent', href: '#/quiz' }, ['Start practising']),
-            el('a', { class: 'btn ghost', href: '#/theory' }, ['Read the theory']),
-          ]),
-        ]),
-        el('div', { class: 'card' }, [
-          el('h3', { text: 'Exam at a glance' }),
-          el('div', { class: 'table-wrap' }, [
-            el('table', { class: 'fact-table' }, [el('tbody', {}, factRows)]),
-          ]),
+        el('div', { class: 'eyebrow', text: 'Exam preparation hub' }),
+        el('h1', { text: META.title }),
+        el('p', { class: 'lead', text:
+          'Everything you need in one place: the full theory, ' + Q.length +
+          ' exam-style practice questions, a timed exam simulation, and flashcards.' }),
+        el('div', { style: 'display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1rem' }, [
+          el('a', { class: 'btn accent', href: '#/quiz' }, ['Start practising']),
+          el('a', { class: 'btn ghost', href: '#/theory' }, ['Read the theory']),
         ]),
       ]);
 
-      // progress KPIs
-      var kpis = el('div', { class: 'grid cols-4', style: 'margin-top:1.4rem' }, [
+      var glance = el('div', { class: 'card hero-glance' }, [
+        el('h3', { text: 'Exam at a glance' }),
+        el('div', { class: 'table-wrap' }, [
+          el('table', { class: 'fact-table' }, [el('tbody', {}, factRows)]),
+        ]),
+      ]);
+
+      // progress KPIs — sit beside "Exam at a glance" as a 2×2 block
+      var kpis = el('div', { class: 'kpi-grid' }, [
         kpi(st.answered, 'questions answered'),
         kpi(st.accuracy + '%', 'overall accuracy'),
         kpi(st.flagged, 'flagged for review'),
         kpi(st.exams, 'exam sims taken'),
       ]);
+
+      var statsRow = el('div', { class: 'hero-stats' }, [glance, kpis]);
 
       var resume = null;
       if (st.lastExam) {
@@ -110,7 +129,7 @@
 
       root.appendChild(topNotice);
       root.appendChild(hero);
-      root.appendChild(kpis);
+      root.appendChild(statsRow);
       if (resume) root.appendChild(resume);
       root.appendChild(el('div', { class: 'grid cols-2', style: 'margin-top:1.4rem' }, [domains, links]));
       root.appendChild(scen);

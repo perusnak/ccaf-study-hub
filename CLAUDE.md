@@ -49,9 +49,14 @@ The parser relies on the guide's markdown conventions:
   `correctIndex` and is stripped from display text.
 - Theory: `# Chapter N:` and `# Domain N:` headings become sections; a safe markdown subset
   (headings, lists, tables, fenced code, bold/inline-code/links) is converted to HTML.
-- Scenario → domain mapping, curated flashcards, and the **Resources hub** (`meta.resources`,
-  grouped external links) are hand-authored tables inside `parse-guide.js` — edit them there, not
-  in the generated `data/*.js`.
+- Question domains are **classified from the question text** (`classifyDomain` + `DOMAIN_SIGNALS`
+  keyword tables in `parse-guide.js`), with each scenario's `SCENARIO_DOMAIN` entry used only as a
+  tie-breaker. This keeps per-domain coverage honest instead of collapsing every question in a
+  scenario to one domain. Tune the keyword signals there if a domain looks over/under-represented.
+- Question scenario names are reconciled (case-insensitively) to the canonical `meta.scenarios`
+  names after parsing, so the scenario filter never silently shows 0 due to casing drift.
+- Curated flashcards and the **Resources hub** (`meta.resources`, grouped external links) are
+  hand-authored tables inside `parse-guide.js` — edit them there, not in the generated `data/*.js`.
 
 If the parser warns about questions without a `[CORRECT]` marker, fix the source guide.
 

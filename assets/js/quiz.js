@@ -92,13 +92,24 @@
             domain: domainSel.value, scenario: scenSel.value, set: setSel.value,
             unseen: onlyUnseen.checked, flagged: onlyFlagged.checked,
           });
-          if (!pool.length) { alert('No questions match those filters.'); return; }
+          if (!pool.length) { showFilterNotice(); return; }
           session = { mode: 'practice', questions: shuffle(pool), idx: 0, answers: {}, reveal: true };
           renderQuestion();
         } }, ['Start practising']),
       ]),
     ]);
     root.appendChild(toolbar);
+
+    function showFilterNotice() {
+      var old = toolbar.querySelector('.filter-notice');
+      if (old) old.parentNode.removeChild(old);
+      toolbar.appendChild(el('div', { class: 'notice filter-notice', style: 'margin-top:1rem' }, [
+        el('span', { html: 'No questions match those filters. Try widening them — or browse more ' +
+          'practice sets on the ' }),
+        el('a', { href: '#/resources', text: 'Resources page' }),
+        el('span', { text: '.' }),
+      ]));
+    }
   }
 
   function filterPool(f) {
