@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200" font-family="Poppins, Arial, sans-serif">
+  <rect width="1200" height="1200" fill="#faf9f5"/>
+  <rect x="0" y="0" width="1200" height="16" fill="#d97757"/>
+  <text x="90" y="360" font-size="30" fill="#d97757" letter-spacing="3" font-weight="600">EXAM PREPARATION HUB · UNOFFICIAL</text>
+  <text x="90" y="470" font-size="84" fill="#141413" font-weight="700">Claude Certified</text>
+  <text x="90" y="570" font-size="84" fill="#141413" font-weight="700">Architect</text>
+  <text x="90" y="690" font-size="72" fill="#141413" font-weight="700">— Foundations <tspan fill="#d97757">(CCA-F)</tspan></text>
+  <text x="90" y="790" font-size="38" fill="#5c5b55" font-family="Lora, Georgia, serif">Full theory · 88 practice questions</text>
+  <text x="90" y="845" font-size="38" fill="#5c5b55" font-family="Lora, Georgia, serif">exam simulation · flashcards</text>
+  <g transform="translate(90,900)">
+    <rect x="0" y="0" width="280" height="70" rx="35" fill="#d97757"/>
+    <text x="140" y="46" font-size="30" fill="#ffffff" font-weight="600" text-anchor="middle">Start practising</text>
+    <rect x="305" y="0" width="340" height="70" rx="35" fill="none" stroke="#b0aea5" stroke-width="2"/>
+    <text x="475" y="46" font-size="30" fill="#141413" font-weight="500" text-anchor="middle">perusnak.github.io</text>
+  </g>
+  <text x="90" y="1080" font-size="24" fill="#b0aea5" font-family="Lora, Georgia, serif">Independent community study aid · not affiliated with Anthropic</text>
+  <text x="980" y="300" font-size="240" text-anchor="middle">🎓</text>
+</svg>

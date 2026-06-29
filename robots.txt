@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://perusnak.github.io/ccaf-study-hub/sitemap.xml
